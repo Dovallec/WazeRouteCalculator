@@ -26,7 +26,7 @@ def calc_vel (p_inicio: str, p_final: str):
   return Vel
   
 # The data is read
-df = pd.read_excel('C:\\Users\\msltd\\Desktop\\coord.xlsx')
+df = pd.read_excel('Route_name.xlsx')
 df.head()
 
 # To speed up the calculation, a lambda function is used, previously a try except function is defined to prevent the program from cutting when a certain error occurs.
