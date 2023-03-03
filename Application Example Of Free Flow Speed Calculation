@@ -1,0 +1,41 @@
+# An application example is presented for the calculation of the free flow speed carried out in a project in Mexico using the waze api connection.
+
+# The necessary libraries are imported.
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import WazeRouteCalculator
+import logging
+import openpyxl
+
+# Proceed with the connection to the waze api.
+logger = logging.getLogger('WazeRouteCalculator.WazeRouteCalculator')
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+logger.addHandler(handler)
+
+# A function is built to calculate the free flow velocity.
+def calc_vel (p_inicio: str, p_final: str):
+  
+  from_address = p_inicio
+  to_address = p_final
+  route = WazeRouteCalculator.WazeRouteCalculator(from_address, to_address)
+  route_distance, route_time = route.calc_route_info()
+  Vel = route_distance / (route_time/60)
+
+  return Vel
+  
+# The data is read
+df = pd.read_excel('C:\\Users\\msltd\\Desktop\\coord.xlsx')
+df.head()
+
+# To speed up the calculation, a lambda function is used, previously a try except function is defined to prevent the program from cutting when a certain error occurs.
+def calc_vel_with_exception(p_inicio: str, p_final: str):
+  try:
+    return calc_vel(p_inicio, p_final)
+  except:
+    # Capturar la excepción y retornar un valor NaN si hay un error
+    return float('nan')
+
+df['Velocity(km/h)'] = df.apply(lambda row: calc_vel_with_exception(row['Column_name1'], row['Columns_name2']), axis=1)
+  
