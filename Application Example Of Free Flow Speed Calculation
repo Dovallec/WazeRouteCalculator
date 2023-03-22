@@ -20,7 +20,7 @@ def calc_vel (p_inicio: str, p_final: str):
   from_address = p_inicio
   to_address = p_final
   route = WazeRouteCalculator.WazeRouteCalculator(from_address, to_address)
-  route_distance, route_time = route.calc_route_info()
+  route_time, route_distance = route.calc_route_info()
   Vel = route_distance / (route_time/60)
 
   return Vel
